@@ -1,0 +1,417 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.novel.mapper.NovelMapper">
+  <resultMap id="BaseResultMap" type="com.novel.bean.Novel">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="auth" jdbcType="VARCHAR" property="auth" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="titleurl" jdbcType="VARCHAR" property="titleurl" />
+    <result column="newtime" jdbcType="VARCHAR" property="newtime" />
+    <result column="newchapter" jdbcType="VARCHAR" property="newchapter" />
+    <result column="newchapterurl" jdbcType="INTEGER" property="newchapterurl" />
+    <result column="image" jdbcType="VARCHAR" property="image" />
+    <result column="body" jdbcType="VARCHAR" property="body" />
+    <result column="contentid" jdbcType="INTEGER" property="contentid" />
+    <result column="state" jdbcType="VARCHAR" property="state" />
+    <result column="source" jdbcType="VARCHAR" property="source" />
+    <result column="product" jdbcType="VARCHAR" property="product" />
+    <result column="productid" jdbcType="INTEGER" property="productid" />
+    <result column="isupdate" jdbcType="INTEGER" property="isupdate" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="updatetime" jdbcType="TIMESTAMP" property="updatetime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, title, auth, type, titleurl, newtime, newchapter, newchapterurl, image, body, 
+    contentid, state, source, product, productid, isupdate, createtime, updatetime
+  </sql>
+  <select id="selectByExample" parameterType="com.novel.bean.NovelExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from novel
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from novel
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from novel
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.novel.bean.NovelExample">
+    delete from novel
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.novel.bean.Novel" useGeneratedKeys="true" keyProperty="id">
+    insert into novel (id, title, auth, 
+      type, titleurl, newtime, 
+      newchapter, newchapterurl, image, 
+      body, contentid, state, 
+      source, product, productid, 
+      isupdate, createtime, updatetime
+      )
+    values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{auth,jdbcType=VARCHAR}, 
+      #{type,jdbcType=VARCHAR}, #{titleurl,jdbcType=VARCHAR}, #{newtime,jdbcType=VARCHAR}, 
+      #{newchapter,jdbcType=VARCHAR}, #{newchapterurl,jdbcType=INTEGER}, #{image,jdbcType=VARCHAR}, 
+      #{body,jdbcType=VARCHAR}, #{contentid,jdbcType=INTEGER}, #{state,jdbcType=VARCHAR}, 
+      #{source,jdbcType=VARCHAR}, #{product,jdbcType=VARCHAR}, #{productid,jdbcType=INTEGER}, 
+      #{isupdate,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP}, #{updatetime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.novel.bean.Novel">
+    insert into novel
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="auth != null">
+        auth,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="titleurl != null">
+        titleurl,
+      </if>
+      <if test="newtime != null">
+        newtime,
+      </if>
+      <if test="newchapter != null">
+        newchapter,
+      </if>
+      <if test="newchapterurl != null">
+        newchapterurl,
+      </if>
+      <if test="image != null">
+        image,
+      </if>
+      <if test="body != null">
+        body,
+      </if>
+      <if test="contentid != null">
+        contentid,
+      </if>
+      <if test="state != null">
+        state,
+      </if>
+      <if test="source != null">
+        source,
+      </if>
+      <if test="product != null">
+        product,
+      </if>
+      <if test="productid != null">
+        productid,
+      </if>
+      <if test="isupdate != null">
+        isupdate,
+      </if>
+      <if test="createtime != null">
+        createtime,
+      </if>
+      <if test="updatetime != null">
+        updatetime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="auth != null">
+        #{auth,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="titleurl != null">
+        #{titleurl,jdbcType=VARCHAR},
+      </if>
+      <if test="newtime != null">
+        #{newtime,jdbcType=VARCHAR},
+      </if>
+      <if test="newchapter != null">
+        #{newchapter,jdbcType=VARCHAR},
+      </if>
+      <if test="newchapterurl != null">
+        #{newchapterurl,jdbcType=INTEGER},
+      </if>
+      <if test="image != null">
+        #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="body != null">
+        #{body,jdbcType=VARCHAR},
+      </if>
+      <if test="contentid != null">
+        #{contentid,jdbcType=INTEGER},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="source != null">
+        #{source,jdbcType=VARCHAR},
+      </if>
+      <if test="product != null">
+        #{product,jdbcType=VARCHAR},
+      </if>
+      <if test="productid != null">
+        #{productid,jdbcType=INTEGER},
+      </if>
+      <if test="isupdate != null">
+        #{isupdate,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null">
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.novel.bean.NovelExample" resultType="java.lang.Long">
+    select count(*) from novel
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update novel
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.title != null">
+        title = #{record.title,jdbcType=VARCHAR},
+      </if>
+      <if test="record.auth != null">
+        auth = #{record.auth,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null">
+        type = #{record.type,jdbcType=VARCHAR},
+      </if>
+      <if test="record.titleurl != null">
+        titleurl = #{record.titleurl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.newtime != null">
+        newtime = #{record.newtime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.newchapter != null">
+        newchapter = #{record.newchapter,jdbcType=VARCHAR},
+      </if>
+      <if test="record.newchapterurl != null">
+        newchapterurl = #{record.newchapterurl,jdbcType=INTEGER},
+      </if>
+      <if test="record.image != null">
+        image = #{record.image,jdbcType=VARCHAR},
+      </if>
+      <if test="record.body != null">
+        body = #{record.body,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contentid != null">
+        contentid = #{record.contentid,jdbcType=INTEGER},
+      </if>
+      <if test="record.state != null">
+        state = #{record.state,jdbcType=VARCHAR},
+      </if>
+      <if test="record.source != null">
+        source = #{record.source,jdbcType=VARCHAR},
+      </if>
+      <if test="record.product != null">
+        product = #{record.product,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productid != null">
+        productid = #{record.productid,jdbcType=INTEGER},
+      </if>
+      <if test="record.isupdate != null">
+        isupdate = #{record.isupdate,jdbcType=INTEGER},
+      </if>
+      <if test="record.createtime != null">
+        createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updatetime != null">
+        updatetime = #{record.updatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update novel
+    set id = #{record.id,jdbcType=INTEGER},
+      title = #{record.title,jdbcType=VARCHAR},
+      auth = #{record.auth,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=VARCHAR},
+      titleurl = #{record.titleurl,jdbcType=VARCHAR},
+      newtime = #{record.newtime,jdbcType=VARCHAR},
+      newchapter = #{record.newchapter,jdbcType=VARCHAR},
+      newchapterurl = #{record.newchapterurl,jdbcType=INTEGER},
+      image = #{record.image,jdbcType=VARCHAR},
+      body = #{record.body,jdbcType=VARCHAR},
+      contentid = #{record.contentid,jdbcType=INTEGER},
+      state = #{record.state,jdbcType=VARCHAR},
+      source = #{record.source,jdbcType=VARCHAR},
+      product = #{record.product,jdbcType=VARCHAR},
+      productid = #{record.productid,jdbcType=INTEGER},
+      isupdate = #{record.isupdate,jdbcType=INTEGER},
+      createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      updatetime = #{record.updatetime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.novel.bean.Novel">
+    update novel
+    <set>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="auth != null">
+        auth = #{auth,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="titleurl != null">
+        titleurl = #{titleurl,jdbcType=VARCHAR},
+      </if>
+      <if test="newtime != null">
+        newtime = #{newtime,jdbcType=VARCHAR},
+      </if>
+      <if test="newchapter != null">
+        newchapter = #{newchapter,jdbcType=VARCHAR},
+      </if>
+      <if test="newchapterurl != null">
+        newchapterurl = #{newchapterurl,jdbcType=INTEGER},
+      </if>
+      <if test="image != null">
+        image = #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="body != null">
+        body = #{body,jdbcType=VARCHAR},
+      </if>
+      <if test="contentid != null">
+        contentid = #{contentid,jdbcType=INTEGER},
+      </if>
+      <if test="state != null">
+        state = #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="source != null">
+        source = #{source,jdbcType=VARCHAR},
+      </if>
+      <if test="product != null">
+        product = #{product,jdbcType=VARCHAR},
+      </if>
+      <if test="productid != null">
+        productid = #{productid,jdbcType=INTEGER},
+      </if>
+      <if test="isupdate != null">
+        isupdate = #{isupdate,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null">
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null">
+        updatetime = #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.novel.bean.Novel">
+    update novel
+    set title = #{title,jdbcType=VARCHAR},
+      auth = #{auth,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      titleurl = #{titleurl,jdbcType=VARCHAR},
+      newtime = #{newtime,jdbcType=VARCHAR},
+      newchapter = #{newchapter,jdbcType=VARCHAR},
+      newchapterurl = #{newchapterurl,jdbcType=INTEGER},
+      image = #{image,jdbcType=VARCHAR},
+      body = #{body,jdbcType=VARCHAR},
+      contentid = #{contentid,jdbcType=INTEGER},
+      state = #{state,jdbcType=VARCHAR},
+      source = #{source,jdbcType=VARCHAR},
+      product = #{product,jdbcType=VARCHAR},
+      productid = #{productid,jdbcType=INTEGER},
+      isupdate = #{isupdate,jdbcType=INTEGER},
+      createtime = #{createtime,jdbcType=TIMESTAMP},
+      updatetime = #{updatetime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

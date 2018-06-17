@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.novel.mapper.ReportMapper">
+  <resultMap id="BaseResultMap" type="com.novel.bean.Report">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="novelid" jdbcType="INTEGER" property="novelid" />
+    <result column="novelname" jdbcType="VARCHAR" property="novelname" />
+    <result column="reason" jdbcType="VARCHAR" property="reason" />
+    <result column="reporttype" jdbcType="VARCHAR" property="reporttype" />
+    <result column="contactType" jdbcType="VARCHAR" property="contacttype" />
+    <result column="contact" jdbcType="VARCHAR" property="contact" />
+    <result column="userid" jdbcType="INTEGER" property="userid" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="updatetime" jdbcType="TIMESTAMP" property="updatetime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, novelid, novelname, reason, reporttype, contactType, contact, userid, state, 
+    createtime, updatetime
+  </sql>
+  <select id="selectByExample" parameterType="com.novel.bean.ReportExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from report
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from report
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from report
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.novel.bean.ReportExample">
+    delete from report
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.novel.bean.Report">
+    insert into report (id, novelid, novelname, 
+      reason, reporttype, contactType, 
+      contact, userid, state, 
+      createtime, updatetime)
+    values (#{id,jdbcType=INTEGER}, #{novelid,jdbcType=INTEGER}, #{novelname,jdbcType=VARCHAR}, 
+      #{reason,jdbcType=VARCHAR}, #{reporttype,jdbcType=VARCHAR}, #{contacttype,jdbcType=VARCHAR}, 
+      #{contact,jdbcType=VARCHAR}, #{userid,jdbcType=INTEGER}, #{state,jdbcType=INTEGER}, 
+      #{createtime,jdbcType=TIMESTAMP}, #{updatetime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.novel.bean.Report">
+    insert into report
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="novelid != null">
+        novelid,
+      </if>
+      <if test="novelname != null">
+        novelname,
+      </if>
+      <if test="reason != null">
+        reason,
+      </if>
+      <if test="reporttype != null">
+        reporttype,
+      </if>
+      <if test="contacttype != null">
+        contactType,
+      </if>
+      <if test="contact != null">
+        contact,
+      </if>
+      <if test="userid != null">
+        userid,
+      </if>
+      <if test="state != null">
+        state,
+      </if>
+      <if test="createtime != null">
+        createtime,
+      </if>
+      <if test="updatetime != null">
+        updatetime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="novelid != null">
+        #{novelid,jdbcType=INTEGER},
+      </if>
+      <if test="novelname != null">
+        #{novelname,jdbcType=VARCHAR},
+      </if>
+      <if test="reason != null">
+        #{reason,jdbcType=VARCHAR},
+      </if>
+      <if test="reporttype != null">
+        #{reporttype,jdbcType=VARCHAR},
+      </if>
+      <if test="contacttype != null">
+        #{contacttype,jdbcType=VARCHAR},
+      </if>
+      <if test="contact != null">
+        #{contact,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null">
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.novel.bean.ReportExample" resultType="java.lang.Long">
+    select count(*) from report
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update report
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.novelid != null">
+        novelid = #{record.novelid,jdbcType=INTEGER},
+      </if>
+      <if test="record.novelname != null">
+        novelname = #{record.novelname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reason != null">
+        reason = #{record.reason,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reporttype != null">
+        reporttype = #{record.reporttype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contacttype != null">
+        contactType = #{record.contacttype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contact != null">
+        contact = #{record.contact,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userid != null">
+        userid = #{record.userid,jdbcType=INTEGER},
+      </if>
+      <if test="record.state != null">
+        state = #{record.state,jdbcType=INTEGER},
+      </if>
+      <if test="record.createtime != null">
+        createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updatetime != null">
+        updatetime = #{record.updatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update report
+    set id = #{record.id,jdbcType=INTEGER},
+      novelid = #{record.novelid,jdbcType=INTEGER},
+      novelname = #{record.novelname,jdbcType=VARCHAR},
+      reason = #{record.reason,jdbcType=VARCHAR},
+      reporttype = #{record.reporttype,jdbcType=VARCHAR},
+      contactType = #{record.contacttype,jdbcType=VARCHAR},
+      contact = #{record.contact,jdbcType=VARCHAR},
+      userid = #{record.userid,jdbcType=INTEGER},
+      state = #{record.state,jdbcType=INTEGER},
+      createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      updatetime = #{record.updatetime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.novel.bean.Report">
+    update report
+    <set>
+      <if test="novelid != null">
+        novelid = #{novelid,jdbcType=INTEGER},
+      </if>
+      <if test="novelname != null">
+        novelname = #{novelname,jdbcType=VARCHAR},
+      </if>
+      <if test="reason != null">
+        reason = #{reason,jdbcType=VARCHAR},
+      </if>
+      <if test="reporttype != null">
+        reporttype = #{reporttype,jdbcType=VARCHAR},
+      </if>
+      <if test="contacttype != null">
+        contactType = #{contacttype,jdbcType=VARCHAR},
+      </if>
+      <if test="contact != null">
+        contact = #{contact,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null">
+        userid = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="state != null">
+        state = #{state,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null">
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null">
+        updatetime = #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.novel.bean.Report">
+    update report
+    set novelid = #{novelid,jdbcType=INTEGER},
+      novelname = #{novelname,jdbcType=VARCHAR},
+      reason = #{reason,jdbcType=VARCHAR},
+      reporttype = #{reporttype,jdbcType=VARCHAR},
+      contactType = #{contacttype,jdbcType=VARCHAR},
+      contact = #{contact,jdbcType=VARCHAR},
+      userid = #{userid,jdbcType=INTEGER},
+      state = #{state,jdbcType=INTEGER},
+      createtime = #{createtime,jdbcType=TIMESTAMP},
+      updatetime = #{updatetime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

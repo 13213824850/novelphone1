@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.novel.mapper.ContentMapper">
+  <resultMap id="BaseResultMap" type="com.novel.bean.Content">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <id column="novelid" jdbcType="INTEGER" property="novelid" />
+    <result column="chaptertext" jdbcType="VARCHAR" property="chaptertext" />
+    <result column="preid" jdbcType="INTEGER" property="preid" />
+    <result column="nextid" jdbcType="INTEGER" property="nextid" />
+    <result column="num" jdbcType="INTEGER" property="num" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.novel.bean.Content">
+    <result column="content" jdbcType="LONGVARCHAR" property="content" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, novelid, chaptertext, preid, nextid, num
+  </sql>
+  <sql id="Blob_Column_List">
+    content
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.novel.bean.ContentExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from content
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.novel.bean.ContentExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from content
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="com.novel.bean.ContentKey" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from content
+    where id = #{id,jdbcType=INTEGER}
+      and novelid = #{novelid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.novel.bean.ContentKey">
+    delete from content
+    where id = #{id,jdbcType=INTEGER}
+      and novelid = #{novelid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.novel.bean.ContentExample">
+    delete from content
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.novel.bean.Content">
+    insert into content (id, novelid, chaptertext, 
+      preid, nextid, num, 
+      content)
+    values (#{id,jdbcType=INTEGER}, #{novelid,jdbcType=INTEGER}, #{chaptertext,jdbcType=VARCHAR}, 
+      #{preid,jdbcType=INTEGER}, #{nextid,jdbcType=INTEGER}, #{num,jdbcType=INTEGER}, 
+      #{content,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.novel.bean.Content">
+    insert into content
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="novelid != null">
+        novelid,
+      </if>
+      <if test="chaptertext != null">
+        chaptertext,
+      </if>
+      <if test="preid != null">
+        preid,
+      </if>
+      <if test="nextid != null">
+        nextid,
+      </if>
+      <if test="num != null">
+        num,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="novelid != null">
+        #{novelid,jdbcType=INTEGER},
+      </if>
+      <if test="chaptertext != null">
+        #{chaptertext,jdbcType=VARCHAR},
+      </if>
+      <if test="preid != null">
+        #{preid,jdbcType=INTEGER},
+      </if>
+      <if test="nextid != null">
+        #{nextid,jdbcType=INTEGER},
+      </if>
+      <if test="num != null">
+        #{num,jdbcType=INTEGER},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.novel.bean.ContentExample" resultType="java.lang.Long">
+    select count(*) from content
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update content
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.novelid != null">
+        novelid = #{record.novelid,jdbcType=INTEGER},
+      </if>
+      <if test="record.chaptertext != null">
+        chaptertext = #{record.chaptertext,jdbcType=VARCHAR},
+      </if>
+      <if test="record.preid != null">
+        preid = #{record.preid,jdbcType=INTEGER},
+      </if>
+      <if test="record.nextid != null">
+        nextid = #{record.nextid,jdbcType=INTEGER},
+      </if>
+      <if test="record.num != null">
+        num = #{record.num,jdbcType=INTEGER},
+      </if>
+      <if test="record.content != null">
+        content = #{record.content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update content
+    set id = #{record.id,jdbcType=INTEGER},
+      novelid = #{record.novelid,jdbcType=INTEGER},
+      chaptertext = #{record.chaptertext,jdbcType=VARCHAR},
+      preid = #{record.preid,jdbcType=INTEGER},
+      nextid = #{record.nextid,jdbcType=INTEGER},
+      num = #{record.num,jdbcType=INTEGER},
+      content = #{record.content,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update content
+    set id = #{record.id,jdbcType=INTEGER},
+      novelid = #{record.novelid,jdbcType=INTEGER},
+      chaptertext = #{record.chaptertext,jdbcType=VARCHAR},
+      preid = #{record.preid,jdbcType=INTEGER},
+      nextid = #{record.nextid,jdbcType=INTEGER},
+      num = #{record.num,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.novel.bean.Content">
+    update content
+    <set>
+      <if test="chaptertext != null">
+        chaptertext = #{chaptertext,jdbcType=VARCHAR},
+      </if>
+      <if test="preid != null">
+        preid = #{preid,jdbcType=INTEGER},
+      </if>
+      <if test="nextid != null">
+        nextid = #{nextid,jdbcType=INTEGER},
+      </if>
+      <if test="num != null">
+        num = #{num,jdbcType=INTEGER},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+      and novelid = #{novelid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.novel.bean.Content">
+    update content
+    set chaptertext = #{chaptertext,jdbcType=VARCHAR},
+      preid = #{preid,jdbcType=INTEGER},
+      nextid = #{nextid,jdbcType=INTEGER},
+      num = #{num,jdbcType=INTEGER},
+      content = #{content,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+      and novelid = #{novelid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.novel.bean.Content">
+    update content
+    set chaptertext = #{chaptertext,jdbcType=VARCHAR},
+      preid = #{preid,jdbcType=INTEGER},
+      nextid = #{nextid,jdbcType=INTEGER},
+      num = #{num,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+      and novelid = #{novelid,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+  
+  <settings>		
+    <setting name="defaultExecutorType" value="REUSE" />
+	  <setting name="logImpl" value="STDOUT_LOGGING"/>
+	  <setting name="logImpl" value="SLF4J"/>
+  </settings>
+ 
+  <typeAliases>
+  	<package name="com.novel.bean"/>
+  </typeAliases>
+<plugins>
+		<plugin interceptor="com.github.pagehelper.PageInterceptor">
+			<!--分页参数合理化  -->
+			<property name="reasonable" value="true"/>
+		</plugin>
+	</plugins>
+
+
+</configuration>
